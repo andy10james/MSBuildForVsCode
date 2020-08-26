@@ -1,0 +1,229 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "MSBuild",
+	"patterns": [
+		{ "include": "#expressions" },
+		{ "include": "#itemGroups" },
+		{ "include": "#targets" },
+		{ "include": "#propertyGroups" },
+		{ "include": "#tags" }
+	],
+	"repository": {
+		"tags": {
+			"name": "entity.msbuild",
+			"match": "<[/?]?\\s*(\\w+)\\b(.*?)/?>",
+			"captures": {
+				"1": {
+					"name": "entity.name.tag.msbuild"
+				}, 
+				"2": {
+					"patterns": [
+						{ "include": "#targetParameters" },
+						{ "include": "#parameters" }
+					]
+				}
+			}
+		},
+		"targets": {
+			"name": "entity.target.msbuild",
+			"match": "</?\\s*(Target)\\b(.*?)/?>",
+			"captures": {
+				"1": {
+					"name": "entity.name.tag.target.msbuild"
+				},
+				"2": {
+					"patterns": [
+						{ 
+							"match": "\\b(Name)\\s*=\\s*(\"(.*?)\")",
+							"captures": {
+								"1" : {
+									"name": "entity.name.attribute.targetName.msbuild"
+								},
+								"2" : {
+									"name": "string.quoted.double.msbuild"
+								},
+								"3": {	
+									"name": "entity.name.function.target.declaration.msbuild"
+								}
+							}
+						},
+						{ "include": "#targetParameters" },
+						{ "include": "#parameters" }
+					]
+				}
+			}
+		},
+		"propertyGroups": {
+			"name": "entity.propertyGroup.msbuild",
+			"begin": "<\\s*(PropertyGroup)\\b.*?>",
+			"end": "</\\s*(PropertyGroup)\\s*>",
+			"beginCaptures": {
+				"1": {
+					"name": "entity.name.tag.propertyGroup.msbuild"
+				}
+			},
+			"endCaptures": {
+				"1": {
+					"name": "entity.name.tag.propertyGroup.msbuild"
+				}
+			},
+			"patterns": [
+				{ "include": "#expressions" },
+				{ "include": "#properties" }
+			]
+		},
+		"itemGroups": {
+			"name": "entity.itemGroup.msbuild",
+			"begin": "<\\s*(ItemGroup)\\b(.*?)/?>",
+			"end": "</\\s*(ItemGroup)\\s*>",
+			"beginCaptures": {
+				"1": {
+					"name": "entity.name.tag.itemGroup.msbuild"
+				},
+				"2": {
+					"patterns": [
+						{ "include": "#parameters" }
+					]
+				}
+			},
+			"endCaptures": {
+				"1": {
+					"name": "entity.name.tag.itemGroup.msbuild"
+				}
+			},
+			"patterns": [
+				{ "include": "#expressions" },
+				{ "include": "#properties" }
+			]
+		},
+		"properties": {
+			"name": "entity.property.msbuild",
+			"match": "<\/?\\s*(\\w+)\\b(.*?)/?>",
+			"captures": {
+				"1": {
+					"name": "variable.name.property.msbuild"
+				}, 
+				"2": {
+					"patterns": [
+						{ "include": "#parameters" }
+					]
+				}
+			}
+		},
+		"targetParameters": {
+			"match": "\\b(\\w*Targets)\\s*=\\s*(\"(.*?)\")",
+			"captures": {
+				"1" : {
+					"name": "entity.name.attribute.msbuild"
+				},
+				"2" : {
+					"name": "string.quoted.double.msbuild"
+				},
+				"3": {	
+					"name": "entity.name.function.target.msbuild"
+				}
+			}
+		},
+		"parameters": {
+			"match" : "\\b(\\w+)\\s*=\\s*(\".*?\")",
+			"captures": {
+				"1" : {
+					"name": "entity.name.attribute.msbuild"
+				},
+				"2" : {
+					"name": "string.quoted.double.msbuild",
+					"patterns": [
+						{
+							"include": "#expressions"
+						},
+						{
+							"name": "constant.character.escape.msbuild",
+							"match": "&.+?;"
+						}
+					]
+				}
+			}
+		},
+		"expressions": {
+			"name": "meta.interpolation",
+			"match": "([$@%]\\()(.*)(\\))",
+			"captures": {
+				"1": {
+					"name": "punctuation.section.interpolation.begin.msbuild"
+				},
+				"3": {
+					"name": "punctuation.section.interpolation.end.msbuild"
+				},
+				"2": {
+					"name": "meta.interpolation.body",
+					"patterns": [
+						{
+							"name": "punctuation.parenthesis",
+							"match": "[()]"
+						},
+						{
+							"name": "punctuation.accessor.msbuild",
+							"match": "\\."
+						},
+						{
+							"name": "entity.name.function.msbuild",
+							"match": "\\w+(?=\\()"
+						},
+						{
+							"name": "constant.numeric.msbuild",
+							"match": "[0-9]+(\\.[0-9]+)?"
+						},
+						{
+							"name": "keyword.operator.msbuild",
+							"match": "[=\\-+/*^]"
+						},
+						{
+							"name": "string.quoted.single.msbuild",
+							"match": "\\'(.*?)\\'",
+							"captures": {
+								"1": {
+									"patterns": [ { "include": "#expressions" }]
+								}
+							}
+						},						
+						{
+							"name": "string.quoted.double.msbuild",
+							"match": "\\\"(.*?)\\\"",
+							"captures": {
+								"1": {
+									"patterns": [ { "include": "#expressions" }]
+								}
+							}
+						},
+						{
+							"name": "variable.other.readwrite.msbuild",
+							"match": "\\w+"
+						},
+						{
+							
+							"match": "(\\[)\\K((\\w|\\.)+)(\\]::)",
+							"captures": {
+								"1": {
+									"name": "punctuation.accessor"
+								},
+								"2": {
+									"name": "entity.name.type.namespace"
+								},
+								"4": {
+									"name": "punctuation.accessor"
+								}
+							}
+						},
+						{
+							"name": "variable.other.object.msbuild",
+							"match": "\\w+(?=\\.)"
+						}
+					]
+				}
+			}
+		}
+	},
+	"scopeName": "source.msbuild",
+	"foldingStartMarker": "<[^/].*>",
+	"foldingStopMarker": "</.*>"
+}

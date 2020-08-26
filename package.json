@@ -1,0 +1,31 @@
+{
+    "name": "msbuild-api-support",
+    "displayName": "MSBuild Language Pack",
+    "description": "Provides language support for the MSBuild XML API within csproj/fsproj/vbproj, targets, and props files.",
+    "version": "0.0.1",
+    "license": "MIT",
+    "engines": {
+        "vscode": "^1.45.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "msbuild",
+            "aliases": ["MSBuild", "msbuild"],
+            "extensions": [".csproj", ".fsproj", ".vbproj", ".targets", ".props"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "msbuild",
+            "scopeName": "source.msbuild",
+            "path": "./syntaxes/msbuild.tmLanguage.json"
+        }],
+        "themes": [{
+            "label": "Dark+ for MSBuild",
+            "uiTheme": "vs-dark",
+            "path": "./themes/dark_plus_msbuild.tmTheme.json"
+        }]
+    }
+}

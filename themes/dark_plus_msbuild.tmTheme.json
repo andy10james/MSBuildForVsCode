@@ -1,0 +1,74 @@
+{
+  "$schema": "vscode://schemas/color-theme",
+
+  // "type": "dark",
+  "include": "./dark_vs.json",
+  "tokenColors": [
+    {
+      "name": "Parameters",
+      "scope": [
+          "entity.name.attribute.msbuild",
+          "entity.name.attribute.targetName.msbuild",
+      ],
+      "settings": {
+          "foreground": "#AEF"
+      }
+    },
+    {
+      "name": "Interpolation",
+      "scope": [
+          "meta.interpolation"
+      ],
+      "settings": {
+          "foreground": "#DDD"
+      }
+    },
+    {
+      "name": "Expressions",
+      "scope": [
+          "meta.interpolation.body"
+      ],
+      "settings": {
+          "fontStyle": "italic"
+      }
+    },
+    // {
+    //   "name": "Property/ItemGroups",
+    //   "scope": [
+    //       "entity.name.tag.propertyGroup.msbuild",
+    //       "entity.name.tag.itemGroup.msbuild"
+    //   ],
+    //   "settings": {
+    //     "foreground": "#075",
+    //   }
+    // },
+    {
+      "name": "Property/ItemGroup Members",
+      "scope": [
+          "variable.name.property.msbuild"
+      ],
+      "settings": {
+        "foreground": "#0A8"
+      }
+    },
+    {
+      "name": "Target reference",
+      "scope": [
+          "entity.name.function.target.msbuild"
+      ],
+      "settings": {
+        "foreground": "#FB0"
+      }
+    },
+    {
+      "name": "Target declaration",
+      "scope": [
+          "entity.name.function.target.declaration.msbuild"
+      ],
+      "settings": {
+        "foreground": "#FB0",
+        "fontStyle": "bold"
+      }
+    }
+  ]
+}
